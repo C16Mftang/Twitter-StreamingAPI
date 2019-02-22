@@ -4,10 +4,10 @@ from tweepy import Stream
 import json
 import tweepy
 
-access_token = "1055460403487084544-Lx3zS4sgqBpiGxZdCKFLqnA0NCCTcT"
-access_token_secret = "XfF3Yj5ew9mNncQq2BCn6yAFBnlcBtpufrTXTted1K6i5"
-API_key = "lk3h67VHklUtCHGmGBGInA1TL"
-API_secret_key = "Ev7ENmQEm71QfznkXpMuh0dl0hbJyK1NedCSdAW36lhAXRa8U2"
+access_token = "your_access_token"
+access_token_secret = "your_access_token_secret"
+API_key = "your_API_key"
+API_secret_key = "your_API_secret_key"
 
 """traffic_words = ['traffic jam', 'traffic', 'congest', 'congestion', 'congestion charge', 'jammed',
                  'gridlock', 'rush hour', 'transport', 'bottleneck']"""
