@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-#This programme is for looking for an efficient way to get data and produce the prototype
-#for clean_data.py
+#This programme is for collecting Twitter data from the Search API
 #Read the comment through carefully before run it
-#Because of waste!
-
+#Because of waste of rate limits
+#For more info, https://developer.twitter.com/en/docs.html
 
 import base64
 import requests
 
-client_key = "lk3h67VHklUtCHGmGBGInA1TL"
-client_secret = "Ev7ENmQEm71QfznkXpMuh0dl0hbJyK1NedCSdAW36lhAXRa8U2"
+client_key = "your-client-key"
+client_secret = "your-client-secret"
 
 #These following steps are to create a Bearer Token to use in the subsequent API requests
 key_secret = '{}:{}'.format(client_key, client_secret).encode('ascii')
@@ -38,8 +37,8 @@ Bearer_token = auth_resp.json()["access_token"]
 search_headers = {'Authorization': 'Bearer {}'.format(Bearer_token)}
 search_url = '{}1.1/tweets/search/fullarchive/boroughs.json'.format(base_url)
 file = open('sample_data_2.txt', 'w')
-#注意此处！下一次再用'a'的时候注意要新开一个文件，不然会重复写入（此处为900问题起源）
-#下一次运行此程序时，先把参数改小，不然太浪费
+
+#Search queries
 #Initialise the request loop by start the first 100 tweets, to get a first next value
 search_params = {'query': 'from: 355994177',
                  'fromDate': '201810250000',
@@ -48,14 +47,11 @@ search_params = {'query': 'from: 355994177',
 search_resp = requests.get(search_url, params=search_params, headers=search_headers)
 tweets = search_resp.json()
 print (tweets)
-for i in tweets['results']:
-    #This edit step is actually useless! just write i to the txt file and clean_data.py will do the rest
-    file.write(str(i)+'\n')
-#first_next = tweets['next']
 
+#Because of the limit of Tweets on each "page" of the collected data, need to iterate over several loops to get enough data
+#The pages are collected by a 'next' value
 #Now start the loop
 #next time do this, comment this bit out to test, to avoid waste
-'''
 next_value = first_next
 j = 0
 while j <= 1:
@@ -67,10 +63,6 @@ while j <= 1:
     search_resp = requests.get(search_url, params=search_params, headers=search_headers)
     tweets = search_resp.json()
     print (tweets)
-    for i in tweets['results']:
-        file.write(str(i)+'\n')
-    next_value = tweets['next']
     j += 1
-'''
 
 file.close()
